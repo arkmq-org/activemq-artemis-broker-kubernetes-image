@@ -26,4 +26,4 @@ items:
         version: 'LATEST'
       from:
         kind: DockerImage
-        name: quay.io/artemiscloud/activemq-artemis-broker-kubernetes:0.2.1
+        name: quay.io/arkmq-org/activemq-artemis-broker-kubernetes:0.2.1

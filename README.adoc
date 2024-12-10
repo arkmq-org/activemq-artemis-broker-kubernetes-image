@@ -1,6 +1,6 @@
 # ActiveMQ Artemis broker Kubernetes container image
 
-NOTE: Extends link:https://github.com/artemiscloud/activemq-artemis-broker-image[ActiveMQ Artemis broker container image]
+NOTE: Extends link:https://github.com/arkmq-org/activemq-artemis-broker-image[ActiveMQ Artemis broker container image]
 
 # License
 
@@ -28,7 +28,7 @@ $ oc process -n broker -f templates/activemq-artemis-basic.yaml -p APPLICATION_N
 Push the image.  You will need the ip address of the OpenShift container registry.  You can get this from the image stream in the OpenShift console
 ```
 $ docker login -u developer -p $(oc whoami -t) openshift-docker-ip:5000
-$ docker tag artemiscloud/activemq-artemis-broker-openshift:latest openshift-docker-ip:5000/broker/activemq-artemis-broker-openshift:1.0
+$ docker tag arkmq-org/activemq-artemis-broker-openshift:latest openshift-docker-ip:5000/broker/activemq-artemis-broker-openshift:1.0
 $ docker push openshift-docker-ip:5000/broker/activemq-artemis-broker-openshift:1.0
 ```
 
@@ -36,7 +36,7 @@ cekit build docker
  
 # Repository
 
-The ActiveMQ Artemis broker container images are pushed to https://quay.io/repository/artemiscloud/activemq-artemis-broker-kubernetes
+The ActiveMQ Artemis broker container images are pushed to https://quay.io/repository/arkmq-org/activemq-artemis-broker-kubernetes
 
 # Tags
 
@@ -44,7 +44,7 @@ The ActiveMQ Artemis broker container images have release tags and special tags.
 
 The image release tags point to images built from the sources of the releated release tags,
 i.e. the `1.0.0` image release tag points to the image built from
-the sources of the [v1.0.0](https://github.com/artemiscloud/activemq-artemis-broker-kubernetes-image/tree/v1.0.0) release tag
+the sources of the [v1.0.0](https://github.com/arkmq-org/activemq-artemis-broker-kubernetes-image/tree/v1.0.0) release tag
 
 The image special tags are `latest` and `dev-latest`.
 The `latest` tag points to the image built from the sources of the latest release tag.
