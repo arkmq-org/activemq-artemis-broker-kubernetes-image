@@ -1,4 +1,4 @@
-@artemiscloud
+@arkmq-org
 Feature: Scaledown
 
   Scenario: Test if DRAINER_HOST works

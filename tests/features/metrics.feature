@@ -1,4 +1,4 @@
-@artemiscloud
+@arkmq-org
 Feature: Management
 
   Scenario Outline: Test if metrics plugin is <status>

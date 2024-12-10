@@ -1,4 +1,4 @@
-@artemiscloud
+@arkmq-org
 Feature: Basic
 
   Scenario: Test if the broker starts

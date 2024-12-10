@@ -1,4 +1,4 @@
-@artemiscloud
+@arkmq-org
 Feature: Keycloak
 
   Scenario: Test keycloak artifacts
