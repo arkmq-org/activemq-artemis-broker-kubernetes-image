@@ -153,8 +153,13 @@ artifacts:
     - name: "jolokia-javaagent-jar"
       url: https://repo.maven.apache.org/maven2/org/jolokia/jolokia-agent-jvm/2.1.2/jolokia-agent-jvm-2.1.2-javaagent.jar
       md5: "3af1d87a2bc49f243a5c5c486b2a676e"
-      dest: /opt/jolokia
-      target: "javaagent.jar"
+      dest: /opt/agents
+      target: "jolokia.jar"
+    - name: "prometheus-javaagent-jar"
+      url: https://github.com/prometheus/jmx_exporter/releases/download/1.2.0/jmx_prometheus_javaagent-1.2.0.jar
+      md5: "7ffa48717cbbef50e6433f387b263343"
+      dest: /opt/agents
+      target: "prometheus.jar"
 
 run:
   user: 185

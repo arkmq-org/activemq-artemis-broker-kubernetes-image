@@ -51,3 +51,4 @@ cp $ADDED_DIR/launch.sh \
 chmod 0755 $AMQ_HOME/bin/launch.sh
 chmod 0755 $AMQ_HOME/bin/readinessProbe.sh
 chmod 0755 $AMQ_HOME/bin/drain.sh
+ln -s /opt/agents/jolokia.jar  /opt/jolokia/javaagent.jar
