@@ -1,6 +1,6 @@
 schema_version: 1
 
-name: amq.broker77.configmap
+name: apache.artemis.jolokia.access
 version: '1.0'
 execute:
     - script: install.sh    

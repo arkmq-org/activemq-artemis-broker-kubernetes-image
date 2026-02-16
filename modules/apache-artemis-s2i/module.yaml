@@ -1,6 +1,6 @@
 schema_version: 1
 
-name: activemq.artemis.jolokia.access
+name: apache.artemis.s2i
 version: '1.0'
 execute:
     - script: install.sh    
