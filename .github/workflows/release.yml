@@ -28,7 +28,7 @@ jobs:
           sudo apt-get install gcc libkrb5-dev pass &&
           sudo pip install docker==5.0.3 docker-squash cekit odcs[client]
       - name: Checkout the repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.BOT_TOKEN }}
 

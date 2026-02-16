@@ -38,7 +38,7 @@ jobs:
           tar -C $HOME/.local/bin -xvf source-to-image.tar.gz
 
       - name: Checkout the repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Update base image
         if: ${{ inputs.snapshot }}
