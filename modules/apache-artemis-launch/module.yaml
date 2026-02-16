@@ -1,6 +1,6 @@
 schema_version: 1
 
-name: activemq.artemis.launch
+name: apache.artemis.launch
 version: "1.1"
 execute:
   - script: install.sh
