@@ -144,7 +144,6 @@ modules:
     - name: os-logging
     - name: os-amq-permissions
     - name: os-java-jolokia
-    - name: apache.artemis.configmap
     - name: apache.artemis.custom.config
     - name: apache.artemis.jolokia.access
     - name: apache.artemis.launch
