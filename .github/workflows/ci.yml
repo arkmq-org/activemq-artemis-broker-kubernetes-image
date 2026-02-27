@@ -1,7 +1,7 @@
 name: CI
 
 env:
-  IMAGE_NAME: activemq-artemis-broker-kubernetes
+  IMAGE_NAME: arkmq-org-broker-kubernetes
   S2I_RELEASE_URL: https://github.com/openshift/source-to-image/releases/download/v1.3.1/source-to-image-v1.3.1-a5a77147-linux-amd64.tar.gz
 
 on:
@@ -43,7 +43,7 @@ jobs:
       - name: Update base image
         if: ${{ inputs.snapshot }}
         run: |
-          BASE_IMAGE="quay.io/${{ secrets.QUAY_NAMESPACE }}/activemq-artemis-broker@$(skopeo inspect docker://quay.io/${{ secrets.QUAY_NAMESPACE }}/activemq-artemis-broker:snapshot | jq -r '.Digest')"
+          BASE_IMAGE="quay.io/${{ secrets.QUAY_NAMESPACE }}/arkmq-org-broker@$(skopeo inspect docker://quay.io/${{ secrets.QUAY_NAMESPACE }}/arkmq-org-broker:snapshot | jq -r '.Digest')"
           sed -i "s~from.*~from: \"${BASE_IMAGE}\"~g" image.yaml
 
       - name: Set up QEMU
@@ -86,7 +86,7 @@ jobs:
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
-              repo: 'activemq-artemis-broker-init-image',
+              repo: 'arkmq-org-broker-init-image',
               workflow_id: 'ci.yml',
               ref: 'main',
               inputs: {

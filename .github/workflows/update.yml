@@ -1,7 +1,7 @@
 name: Update
 
 env:
-  IMAGE_NAME: activemq-artemis-broker-kubernetes
+  IMAGE_NAME: arkmq-org-broker-kubernetes
 
 on:
   workflow_dispatch:
@@ -69,7 +69,7 @@ jobs:
         if: ${{ inputs.update_base_image }}
         run: |
           if [ "${{ inputs.base_image }}" = "latest" ]; then
-            BASE_IMAGE="quay.io/${{ secrets.QUAY_NAMESPACE }}/activemq-artemis-broker@$(skopeo inspect docker://quay.io/${{ secrets.QUAY_NAMESPACE }}/activemq-artemis-broker:latest | jq -r '.Digest')"
+            BASE_IMAGE="quay.io/${{ secrets.QUAY_NAMESPACE }}/arkmq-org-broker@$(skopeo inspect docker://quay.io/${{ secrets.QUAY_NAMESPACE }}/arkmq-org-broker:latest | jq -r '.Digest')"
           else
             BASE_IMAGE="${{ inputs.base_image }}"
           fi
@@ -80,24 +80,24 @@ jobs:
         run: |
           BASE_IMAGE="$(grep -Po -m 1 '(?<=^from: ")[^"]+' image.yaml)"
           APACHE_ARTEMIS_VERSION=$(skopeo inspect docker://${BASE_IMAGE} | grep -Po '(?<=APACHE_ARTEMIS_VERSION=)[^"]*')
-          wget -O netty-pom.xml "https://raw.githubusercontent.com/apache/activemq-artemis/${APACHE_ARTEMIS_VERSION}/pom.xml"
+          wget -O netty-pom.xml "https://raw.githubusercontent.com/apache/artemis/${APACHE_ARTEMIS_VERSION}/pom.xml"
           NETTY_TCNATIVE_VERSION=$(grep -Po '(?<=tcnative.version>)[^<]+' netty-pom.xml)
           NETTY_TCNATIVE_CLASSES_URL="https://repo1.maven.org/maven2/io/netty/netty-tcnative-classes/${NETTY_TCNATIVE_VERSION}/netty-tcnative-classes-${NETTY_TCNATIVE_VERSION}.jar"
           NETTY_TCNATIVE_CLASSES_TARGET=$(basename ${NETTY_TCNATIVE_CLASSES_URL})
           wget -O ${NETTY_TCNATIVE_CLASSES_TARGET} "${NETTY_TCNATIVE_CLASSES_URL}"
           NETTY_TCNATIVE_CLASSES_MD5=($(md5sum ${NETTY_TCNATIVE_CLASSES_TARGET}))
-          sed -i "/name: netty-tcnative-classes/,/md5:/ s~target:.*~target: ${NETTY_TCNATIVE_CLASSES_TARGET}~" modules/activemq-artemis-launch/module.yaml
-          sed -i "/name: netty-tcnative-classes/,/md5:/ s~url:.*~url: ${NETTY_TCNATIVE_CLASSES_URL}~" modules/activemq-artemis-launch/module.yaml
-          sed -i "/name: netty-tcnative-classes/,/md5:/ s~md5:.*~md5: ${NETTY_TCNATIVE_CLASSES_MD5}~" modules/activemq-artemis-launch/module.yaml
+          sed -i "/name: netty-tcnative-classes/,/md5:/ s~target:.*~target: ${NETTY_TCNATIVE_CLASSES_TARGET}~" modules/apache-artemis-launch/module.yaml
+          sed -i "/name: netty-tcnative-classes/,/md5:/ s~url:.*~url: ${NETTY_TCNATIVE_CLASSES_URL}~" modules/apache-artemis-launch/module.yaml
+          sed -i "/name: netty-tcnative-classes/,/md5:/ s~md5:.*~md5: ${NETTY_TCNATIVE_CLASSES_MD5}~" modules/apache-artemis-launch/module.yaml
           NETTY_TCNATIVE_INDEX=0
           for NETTY_TCNATIVE_QUALIFIER in 'linux-x86_64' 'linux-aarch_64' 'osx-x86_64' 'windows-x86_64'; do
             NETTY_TCNATIVE_URL="https://repo1.maven.org/maven2/io/netty/netty-tcnative-boringssl-static/${NETTY_TCNATIVE_VERSION}/netty-tcnative-boringssl-static-${NETTY_TCNATIVE_VERSION}-${NETTY_TCNATIVE_QUALIFIER}.jar"
             NETTY_TCNATIVE_TARGET=$(basename ${NETTY_TCNATIVE_URL})
             wget -O ${NETTY_TCNATIVE_TARGET} "${NETTY_TCNATIVE_URL}"
             NETTY_TCNATIVE_MD5=($(md5sum ${NETTY_TCNATIVE_TARGET}))
-            sed -i "/name: netty-tcnative-${NETTY_TCNATIVE_INDEX}/,/md5:/ s~target:.*~target: ${NETTY_TCNATIVE_TARGET}~" modules/activemq-artemis-launch/module.yaml
-            sed -i "/name: netty-tcnative-${NETTY_TCNATIVE_INDEX}/,/md5:/ s~url:.*~url: ${NETTY_TCNATIVE_URL}~" modules/activemq-artemis-launch/module.yaml
-            sed -i "/name: netty-tcnative-${NETTY_TCNATIVE_INDEX}/,/md5:/ s~md5:.*~md5: ${NETTY_TCNATIVE_MD5}~" modules/activemq-artemis-launch/module.yaml
+            sed -i "/name: netty-tcnative-${NETTY_TCNATIVE_INDEX}/,/md5:/ s~target:.*~target: ${NETTY_TCNATIVE_TARGET}~" modules/apache-artemis-launch/module.yaml
+            sed -i "/name: netty-tcnative-${NETTY_TCNATIVE_INDEX}/,/md5:/ s~url:.*~url: ${NETTY_TCNATIVE_URL}~" modules/apache-artemis-launch/module.yaml
+            sed -i "/name: netty-tcnative-${NETTY_TCNATIVE_INDEX}/,/md5:/ s~md5:.*~md5: ${NETTY_TCNATIVE_MD5}~" modules/apache-artemis-launch/module.yaml
             NETTY_TCNATIVE_INDEX=$((NETTY_TCNATIVE_INDEX + 1))
           done
           git commit --all --message "Upgrade netty-tcnative to ${NETTY_TCNATIVE_VERSION}" || echo "Nothing to commit"
